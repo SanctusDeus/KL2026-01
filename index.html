@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #f4f4f4;
+    }
+
+    .calculator {
+      width: min(360px, calc(100vw - 32px));
+      padding: 24px;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .controls {
+      display: grid;
+      gap: 12px;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #cfcfcf;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      border: none;
+      background: #111111;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 16px;
+      font-size: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main class="calculator">
+    <h1>Калькулятор</h1>
+    <div class="controls">
+      <input id="firstNumber" type="number" placeholder="Первое число">
+      <select id="operation">
+        <option value="+">Сложение</option>
+        <option value="-">Вычитание</option>
+        <option value="*">Умножение</option>
+        <option value="/">Деление</option>
+      </select>
+      <input id="secondNumber" type="number" placeholder="Второе число">
+      <button id="calculateButton" type="button">Посчитать</button>
+    </div>
+    <div id="result" class="result">Результат: -</div>
+  </main>
+
+  <script>
+    const firstNumberInput = document.getElementById("firstNumber");
+    const secondNumberInput = document.getElementById("secondNumber");
+    const operationSelect = document.getElementById("operation");
+    const resultElement = document.getElementById("result");
+    const calculateButton = document.getElementById("calculateButton");
+
+    function calculate() {
+      const firstNumber = Number(firstNumberInput.value);
+      const secondNumber = Number(secondNumberInput.value);
+      const operation = operationSelect.value;
+
+      if (Number.isNaN(firstNumber) || Number.isNaN(secondNumber)) {
+        resultElement.textContent = "Результат: введите оба числа";
+        return;
+      }
+
+      if (operation === "/" && secondNumber === 0) {
+        resultElement.textContent = "Результат: на ноль делить нельзя";
+        return;
+      }
+
+      let result;
+
+      switch (operation) {
+        case "+":
+          result = firstNumber + secondNumber;
+          break;
+        case "-":
+          result = firstNumber - secondNumber;
+          break;
+        case "*":
+          result = firstNumber * secondNumber;
+          break;
+        case "/":
+          result = firstNumber / secondNumber;
+          break;
+        default:
+          resultElement.textContent = "Результат: неизвестная операция";
+          return;
+      }
+
+      resultElement.textContent = `Результат: ${result}`;
+    }
+
+    calculateButton.addEventListener("click", calculate);
+  </script>
+</body>
+</html>
